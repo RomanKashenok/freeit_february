@@ -1,0 +1,6 @@
+Example first line
+Example second line
+Example third line
+Example fourth line
+
+Русский текст
