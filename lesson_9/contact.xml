@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="contacts.xsl"?> 
+<!-- Информация для обработки
+для данного документа необходимо применить стилевую таблицу (stylesheet) contacts.xsl
+ -->
+
+<contacts>
+	<contact type="work">
+		<firstName>Vasya</firstName>
+		<lastName>Ivanov</lastName>
+		<email>ivanov@mail.ru</email>
+	</contact>
+	<contact type="personal">
+		<firstName>Petya</firstName>
+		<lastName>Ivanov</lastName>
+		<email>petya@mail.ru</email>
+	</contact>
+	<contact type="favourite">
+		<firstName>Ivan</firstName>
+		<lastName>Ivanov</lastName>
+		<email>ivan@mail.ru</email>
+	</contact>
+</contacts>
