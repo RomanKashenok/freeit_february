@@ -1,38 +1,41 @@
 package info.freeit.threads.synchroniation.old;
 
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.CyclicBarrier;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class CounterRunner {
 
     public static ReentrantLock lock = new ReentrantLock();
-    public static CyclicBarrier barrier = new CyclicBarrier(5);
-    public static boolean condition = false;
+    public static AtomicInteger counter = new AtomicInteger();
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
+//        for (int i = 0; i < 100; i++) {
+//            new Thread(() -> {
+//                for (int j = 0; j < 1000; j++) {
+//                    counter.addAndGet(1);
+//                }
+//            }).start();
+//        }
+//        Thread.sleep(100);
+//        System.out.println(counter);
 
         Counter counter = new Counter();
 
         for (int i = 0; i < 5; i++) {
             new Thread(() -> {
-                try {
-                    barrier.await();
-                    if(!condition) {
-                        condition = true;
-                        Thread.sleep(15);
-                    }
+                lock.lock();
                     counter.count = 1;
-                    synchronized (counter) {
-                        for (int j = 0; j < 5; j++) {
-                            System.out.printf("Thread %s modified counter. Current count = %d, ineration: %d \n", Thread.currentThread().getName(), counter.count, j);
-                            counter.increment();
-                        }
+                    for (int j = 0; j < 5; j++) {
+                        System.out.printf("Thread %s modified counter. Current count = %d, ineration: %d \n", Thread.currentThread().getName(), counter.count, j);
+                        counter.increment();
                     }
-                } catch (Exception e) {
-                }
+                    letOtherThreadsIn();
             }).start();
         }
+    }
 
+    private static void letOtherThreadsIn() {
+        System.out.println(Thread.currentThread().getName() + " finished with incrementing");
+        lock.unlock();
     }
 }
